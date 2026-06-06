@@ -1,0 +1,74 @@
+<Window x:Class="DadaGrid.BookEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавление книги" Height="450" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Название -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Название:" 
+                   VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+        <TextBox x:Name="TitleTextBox" Grid.Row="0" Grid.Column="1" 
+                 Margin="5" Height="30" VerticalContentAlignment="Center"/>
+
+        <!-- Автор -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Автор:" 
+                   VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+        <TextBox x:Name="AuthorTextBox" Grid.Row="1" Grid.Column="1" 
+                 Margin="5" Height="30" VerticalContentAlignment="Center"/>
+
+        <!-- Жанр -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Жанр:" 
+                   VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+        <ComboBox x:Name="GenreComboBox" Grid.Row="2" Grid.Column="1" 
+                  Margin="5" Height="30" VerticalContentAlignment="Center"/>
+
+        <!-- Год публикации -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Год публикации:" 
+                   VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+        <TextBox x:Name="YearTextBox" Grid.Row="3" Grid.Column="1" 
+                 Margin="5" Height="30" VerticalContentAlignment="Center"/>
+
+        <!-- Цена -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Цена:" 
+                   VerticalAlignment="Center" FontWeight="Bold" Margin="5"/>
+        <TextBox x:Name="PriceTextBox" Grid.Row="4" Grid.Column="1" 
+                 Margin="5" Height="30" VerticalContentAlignment="Center"/>
+
+        <!-- Разделитель -->
+        <Separator Grid.Row="5" Grid.ColumnSpan="2" Margin="5,20,5,10"/>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" 
+                    Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button x:Name="SaveButton" Content="Сохранить" Width="100" Height="35" 
+                    Margin="5" Click="SaveButton_Click" Background="#4CAF50" 
+                    Foreground="White" FontWeight="Bold">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="CancelButton" Content="Отмена" Width="100" Height="35" 
+                    Margin="5" Click="CancelButton_Click" Background="#f44336" 
+                    Foreground="White" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</Window>
