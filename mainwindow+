@@ -1,0 +1,84 @@
+private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new BookEditWindow(); // Создайте окно для редактирования
+            if (addWindow.ShowDialog() == true)
+            {
+                var newBook = addWindow.GetBook();
+                var context = ExamEntitiesEntities.GetContext();
+                context.Books.Add(newBook);
+                context.SaveChanges();
+                LoadData(); // Перезагружаем данные
+                MessageBox.Show("Книга успешно добавлена!", "Успех", 
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        // Кнопка редактирования
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedBook = BooksGrid.SelectedItem as Books;
+            if (selectedBook == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите книгу для редактирования.", 
+                    "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var editWindow = new BookEditWindow(selectedBook);
+            if (editWindow.ShowDialog() == true)
+            {
+                var updatedBook = editWindow.GetBook();
+                var context = ExamEntitiesEntities.GetContext();
+                var bookToUpdate = context.Books.Find(selectedBook.Id);
+                if (bookToUpdate != null)
+                {
+                    bookToUpdate.Title = updatedBook.Title;
+                    bookToUpdate.Author = updatedBook.Author;
+                    bookToUpdate.GenreId = updatedBook.GenreId;
+                    bookToUpdate.YearOfPublication = updatedBook.YearOfPublication;
+                    // Добавьте остальные поля
+                    context.SaveChanges();
+                    LoadData();
+                    MessageBox.Show("Книга успешно обновлена!", "Успех", 
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+        }
+
+        // Кнопка удаления
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedBook = BooksGrid.SelectedItem as Books;
+            if (selectedBook == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите книгу для удаления.", 
+                    "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show($"Вы уверены, что хотите удалить книгу \"{selectedBook.Title}\"?", 
+                "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    var context = ExamEntitiesEntities.GetContext();
+                    var bookToDelete = context.Books.Find(selectedBook.Id);
+                    if (bookToDelete != null)
+                    {
+                        context.Books.Remove(bookToDelete);
+                        context.SaveChanges();
+                        LoadData();
+                        MessageBox.Show("Книга успешно удалена!", "Успех", 
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка", 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+    }
